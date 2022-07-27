@@ -3,13 +3,11 @@ package ru.netology.domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.netology.repository.ProductRepository;
-import org.mockito.Mockito;
 
-import static org.mockito.Mockito.*;
 import  static org.junit.jupiter.api.Assertions.*;
 
 public class ProductManagerTest {
-    ProductRepository repo = Mockito.mock(ProductRepository.class);
+    ProductRepository repo = new ProductRepository();
     ProductManager manager = new ProductManager(repo);
     Product book1 = new Book(1, "Мы", "Замятин", 1000);
     Product book2 = new Book(2, "Стена", "Сартр", 800);
@@ -18,9 +16,10 @@ public class ProductManagerTest {
 
     @Test
     public void ShouldSearch() {
-        Product[] products = {book1, book2, phone1, phone2};
-        doReturn(products).when(repo).getProducts();
-
+        manager.add(book1);
+        manager.add(book2);
+        manager.add(phone1);
+        manager.add(phone2);
 
         Product[] actual = manager.searchBy("iPhone");
         Product[] expected = {phone1, phone2};
