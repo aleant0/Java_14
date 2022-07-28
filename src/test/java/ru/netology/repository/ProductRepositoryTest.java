@@ -40,4 +40,27 @@ public class ProductRepositoryTest {
         Assertions.assertArrayEquals(actual, expected);
     }
 
+    @Test
+    public void ShouldShowNotFoundException() {
+        repo.save(product1);
+        repo.save(product2);
+        repo.save(product3);
+        repo.save(product4);
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            repo.removeById(10);
+        });
+    }
+
+    @Test
+    public void ShouldShowAlreadyExistException() {
+        repo.save(product1);
+        repo.save(product2);
+        repo.save(product3);
+        repo.save(product4);
+
+        Assertions.assertThrows(AlreadyExistException.class, () -> {
+            repo.save(product4);
+        });
+    }
 }
